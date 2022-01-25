@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProWatchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Durumlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MakineId" Type="tinyint" />
+          <Property Name="DurumTuruId" Type="tinyint" />
+          <Property Name="DurusNedeni" Type="nvarchar" MaxLength="100" />
+          <Property Name="OperatorId" Type="tinyint" />
+          <Property Name="TeknikerId" Type="tinyint" />
+          <Property Name="DurusBaslamaZamani" Type="nvarchar" MaxLength="50" />
+          <Property Name="DurusBitisZamani" Type="nvarchar" MaxLength="50" />
+          <Property Name="DurusSuresi" Type="int" />
+        </EntityType>
+        <EntityType Name="DurusTurleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DurusAdı" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Kullanıcılar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="20" />
+          <Property Name="Parola" Type="nvarchar" MaxLength="20" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="KayıtTarihi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Yetkisi" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Makineler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MakineAd" Type="nvarchar" MaxLength="20" />
+          <Property Name="MakineTuru" Type="nvarchar" MaxLength="20" />
+          <Property Name="UretimId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Operatorler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OperatorSicil" Type="int" />
+          <Property Name="OperatorAd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Teknikerler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeknikerSicil" Type="int" />
+          <Property Name="TeknikerAd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UretimBilgileri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MakineId" Type="tinyint" />
+          <Property Name="UretimHedefi" Type="int" />
+          <Property Name="UretilenMiktar" Type="int" />
+          <Property Name="Urun" Type="nvarchar" MaxLength="50" />
+          <Property Name="UretimBitisOnay" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Durumlar_DurusTurleri">
+          <End Role="DurusTurleri" Type="Self.DurusTurleri" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DurusTurleri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="DurumTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Makineler">
+          <End Role="Makineler" Type="Self.Makineler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makineler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="MakineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Operatorler">
+          <End Role="Operatorler" Type="Self.Operatorler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operatorler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="OperatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Teknikerler">
+          <End Role="Teknikerler" Type="Self.Teknikerler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teknikerler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="TeknikerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Makineler_UretimBilgileri">
+          <End Role="UretimBilgileri" Type="Self.UretimBilgileri" Multiplicity="0..1" />
+          <End Role="Makineler" Type="Self.Makineler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UretimBilgileri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Makineler">
+              <PropertyRef Name="UretimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProWatchModelStoreContainer">
+          <EntitySet Name="Durumlar" EntityType="Self.Durumlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DurusTurleri" EntityType="Self.DurusTurleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanıcılar" EntityType="Self.Kullanıcılar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Makineler" EntityType="Self.Makineler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operatorler" EntityType="Self.Operatorler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teknikerler" EntityType="Self.Teknikerler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UretimBilgileri" EntityType="Self.UretimBilgileri" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Durumlar_DurusTurleri" Association="Self.FK_Durumlar_DurusTurleri">
+            <End Role="DurusTurleri" EntitySet="DurusTurleri" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Makineler" Association="Self.FK_Durumlar_Makineler">
+            <End Role="Makineler" EntitySet="Makineler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Operatorler" Association="Self.FK_Durumlar_Operatorler">
+            <End Role="Operatorler" EntitySet="Operatorler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Teknikerler" Association="Self.FK_Durumlar_Teknikerler">
+            <End Role="Teknikerler" EntitySet="Teknikerler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Makineler_UretimBilgileri" Association="Self.FK_Makineler_UretimBilgileri">
+            <End Role="UretimBilgileri" EntitySet="UretimBilgileri" />
+            <End Role="Makineler" EntitySet="Makineler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProWatchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Durumlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MakineId" Type="Byte" />
+          <Property Name="DurumTuruId" Type="Byte" />
+          <Property Name="DurusNedeni" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OperatorId" Type="Byte" />
+          <Property Name="TeknikerId" Type="Byte" />
+          <Property Name="DurusBaslamaZamani" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DurusBitisZamani" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DurusSuresi" Type="Int32" />
+          <NavigationProperty Name="DurusTurleri" Relationship="Self.FK_Durumlar_DurusTurleri" FromRole="Durumlar" ToRole="DurusTurleri" />
+          <NavigationProperty Name="Makineler" Relationship="Self.FK_Durumlar_Makineler" FromRole="Durumlar" ToRole="Makineler" />
+          <NavigationProperty Name="Operatorler" Relationship="Self.FK_Durumlar_Operatorler" FromRole="Durumlar" ToRole="Operatorler" />
+          <NavigationProperty Name="Teknikerler" Relationship="Self.FK_Durumlar_Teknikerler" FromRole="Durumlar" ToRole="Teknikerler" />
+        </EntityType>
+        <EntityType Name="DurusTurleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DurusAdı" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Durumlar" Relationship="Self.FK_Durumlar_DurusTurleri" FromRole="DurusTurleri" ToRole="Durumlar" />
+        </EntityType>
+        <EntityType Name="Kullanıcılar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Parola" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KayıtTarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Yetkisi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Makineler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MakineAd" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MakineTuru" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UretimId" Type="Byte" />
+          <NavigationProperty Name="Durumlar" Relationship="Self.FK_Durumlar_Makineler" FromRole="Makineler" ToRole="Durumlar" />
+          <NavigationProperty Name="UretimBilgileri" Relationship="Self.FK_Makineler_UretimBilgileri" FromRole="Makineler" ToRole="UretimBilgileri" />
+        </EntityType>
+        <EntityType Name="Operatorler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperatorSicil" Type="Int32" />
+          <Property Name="OperatorAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Durumlar" Relationship="Self.FK_Durumlar_Operatorler" FromRole="Operatorler" ToRole="Durumlar" />
+        </EntityType>
+        <EntityType Name="Teknikerler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeknikerSicil" Type="Int32" />
+          <Property Name="TeknikerAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Durumlar" Relationship="Self.FK_Durumlar_Teknikerler" FromRole="Teknikerler" ToRole="Durumlar" />
+        </EntityType>
+        <EntityType Name="UretimBilgileri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MakineId" Type="Byte" />
+          <Property Name="UretimHedefi" Type="Int32" />
+          <Property Name="UretilenMiktar" Type="Int32" />
+          <Property Name="Urun" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UretimBitisOnay" Type="Boolean" />
+          <NavigationProperty Name="Makineler" Relationship="Self.FK_Makineler_UretimBilgileri" FromRole="UretimBilgileri" ToRole="Makineler" />
+        </EntityType>
+        <Association Name="FK_Durumlar_DurusTurleri">
+          <End Role="DurusTurleri" Type="Self.DurusTurleri" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DurusTurleri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="DurumTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Makineler">
+          <End Role="Makineler" Type="Self.Makineler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makineler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="MakineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Operatorler">
+          <End Role="Operatorler" Type="Self.Operatorler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operatorler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="OperatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Durumlar_Teknikerler">
+          <End Role="Teknikerler" Type="Self.Teknikerler" Multiplicity="0..1" />
+          <End Role="Durumlar" Type="Self.Durumlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teknikerler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Durumlar">
+              <PropertyRef Name="TeknikerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Makineler_UretimBilgileri">
+          <End Role="UretimBilgileri" Type="Self.UretimBilgileri" Multiplicity="0..1" />
+          <End Role="Makineler" Type="Self.Makineler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UretimBilgileri">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Makineler">
+              <PropertyRef Name="UretimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProWatchEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Durumlar" EntityType="Self.Durumlar" />
+          <EntitySet Name="DurusTurleri" EntityType="Self.DurusTurleri" />
+          <EntitySet Name="Kullanıcılar" EntityType="Self.Kullanıcılar" />
+          <EntitySet Name="Makineler" EntityType="Self.Makineler" />
+          <EntitySet Name="Operatorler" EntityType="Self.Operatorler" />
+          <EntitySet Name="Teknikerler" EntityType="Self.Teknikerler" />
+          <EntitySet Name="UretimBilgileri" EntityType="Self.UretimBilgileri" />
+          <AssociationSet Name="FK_Durumlar_DurusTurleri" Association="Self.FK_Durumlar_DurusTurleri">
+            <End Role="DurusTurleri" EntitySet="DurusTurleri" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Makineler" Association="Self.FK_Durumlar_Makineler">
+            <End Role="Makineler" EntitySet="Makineler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Operatorler" Association="Self.FK_Durumlar_Operatorler">
+            <End Role="Operatorler" EntitySet="Operatorler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Durumlar_Teknikerler" Association="Self.FK_Durumlar_Teknikerler">
+            <End Role="Teknikerler" EntitySet="Teknikerler" />
+            <End Role="Durumlar" EntitySet="Durumlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Makineler_UretimBilgileri" Association="Self.FK_Makineler_UretimBilgileri">
+            <End Role="UretimBilgileri" EntitySet="UretimBilgileri" />
+            <End Role="Makineler" EntitySet="Makineler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProWatchModelStoreContainer" CdmEntityContainer="ProWatchEntities">
+          <EntitySetMapping Name="Durumlar">
+            <EntityTypeMapping TypeName="ProWatchModel.Durumlar">
+              <MappingFragment StoreEntitySet="Durumlar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MakineId" ColumnName="MakineId" />
+                <ScalarProperty Name="DurumTuruId" ColumnName="DurumTuruId" />
+                <ScalarProperty Name="DurusNedeni" ColumnName="DurusNedeni" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="TeknikerId" ColumnName="TeknikerId" />
+                <ScalarProperty Name="DurusBaslamaZamani" ColumnName="DurusBaslamaZamani" />
+                <ScalarProperty Name="DurusBitisZamani" ColumnName="DurusBitisZamani" />
+                <ScalarProperty Name="DurusSuresi" ColumnName="DurusSuresi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DurusTurleri">
+            <EntityTypeMapping TypeName="ProWatchModel.DurusTurleri">
+              <MappingFragment StoreEntitySet="DurusTurleri">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DurusAdı" ColumnName="DurusAdı" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanıcılar">
+            <EntityTypeMapping TypeName="ProWatchModel.Kullanıcılar">
+              <MappingFragment StoreEntitySet="Kullanıcılar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="KayıtTarihi" ColumnName="KayıtTarihi" />
+                <ScalarProperty Name="Yetkisi" ColumnName="Yetkisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Makineler">
+            <EntityTypeMapping TypeName="ProWatchModel.Makineler">
+              <MappingFragment StoreEntitySet="Makineler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MakineAd" ColumnName="MakineAd" />
+                <ScalarProperty Name="MakineTuru" ColumnName="MakineTuru" />
+                <ScalarProperty Name="UretimId" ColumnName="UretimId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operatorler">
+            <EntityTypeMapping TypeName="ProWatchModel.Operatorler">
+              <MappingFragment StoreEntitySet="Operatorler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OperatorSicil" ColumnName="OperatorSicil" />
+                <ScalarProperty Name="OperatorAd" ColumnName="OperatorAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teknikerler">
+            <EntityTypeMapping TypeName="ProWatchModel.Teknikerler">
+              <MappingFragment StoreEntitySet="Teknikerler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeknikerSicil" ColumnName="TeknikerSicil" />
+                <ScalarProperty Name="TeknikerAd" ColumnName="TeknikerAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UretimBilgileri">
+            <EntityTypeMapping TypeName="ProWatchModel.UretimBilgileri">
+              <MappingFragment StoreEntitySet="UretimBilgileri">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MakineId" ColumnName="MakineId" />
+                <ScalarProperty Name="UretimHedefi" ColumnName="UretimHedefi" />
+                <ScalarProperty Name="UretilenMiktar" ColumnName="UretilenMiktar" />
+                <ScalarProperty Name="Urun" ColumnName="Urun" />
+                <ScalarProperty Name="UretimBitisOnay" ColumnName="UretimBitisOnay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
