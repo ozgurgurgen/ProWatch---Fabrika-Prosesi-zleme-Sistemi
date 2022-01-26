@@ -10,9 +10,10 @@ using System.Windows.Forms;
 
 namespace ProWatch
 {
-    public partial class Form1 : Form
+    public partial class Giris : Form
     {
-        public Form1()
+        public static string yetki;
+        public Giris()
         {
             InitializeComponent();
         }
@@ -29,8 +30,10 @@ namespace ProWatch
             var sorgu = from kullanici in db.Kullanıcılar
                         where kullanici.KullaniciAdi == KullaniciAdiTextBox.Text && kullanici.Parola == ParolaTextBox.Text
                         select kullanici;
+            yetki = sorgu.FirstOrDefault().Yetkisi;
             if (sorgu.Any())
             {
+                
                 this.Hide();
                 new GenelBilgiEkrani().Show();
             }
@@ -51,6 +54,11 @@ namespace ProWatch
             {
                 GirisYap();
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

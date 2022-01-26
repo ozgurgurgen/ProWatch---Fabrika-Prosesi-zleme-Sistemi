@@ -1,6 +1,6 @@
 ﻿namespace ProWatch
 {
-    partial class Form1
+    partial class Giris
     {
         /// <summary>
         ///Gerekli tasarımcı değişkeni.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Giris));
             this.IptalButonu = new System.Windows.Forms.Button();
             this.GirisButonu = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,7 +86,7 @@
             this.ParolaTextBox.MaximumSize = new System.Drawing.Size(245, 30);
             this.ParolaTextBox.MinimumSize = new System.Drawing.Size(245, 30);
             this.ParolaTextBox.Name = "ParolaTextBox";
-            this.ParolaTextBox.Size = new System.Drawing.Size(245, 30);
+            this.ParolaTextBox.Size = new System.Drawing.Size(245, 26);
             this.ParolaTextBox.TabIndex = 2;
             this.ParolaTextBox.UseSystemPasswordChar = true;
             this.ParolaTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KullaniciAdiTextBox_KeyDown);
@@ -112,7 +112,7 @@
             this.KullaniciAdiTextBox.MaximumSize = new System.Drawing.Size(245, 30);
             this.KullaniciAdiTextBox.MinimumSize = new System.Drawing.Size(245, 30);
             this.KullaniciAdiTextBox.Name = "KullaniciAdiTextBox";
-            this.KullaniciAdiTextBox.Size = new System.Drawing.Size(245, 30);
+            this.KullaniciAdiTextBox.Size = new System.Drawing.Size(245, 26);
             this.KullaniciAdiTextBox.TabIndex = 1;
             this.KullaniciAdiTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KullaniciAdiTextBox_KeyDown);
             // 
@@ -132,6 +132,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KullaniciAdiTextBox_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
